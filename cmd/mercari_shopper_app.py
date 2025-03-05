@@ -1,12 +1,10 @@
 import json
-import sys
 import os
+import sys
 
-
-from internal.llm.llm_parameter_extraction import (
-    extract_search_parameters_with_llm_ollama,
-)
 from internal.api_client.mercari_api_client import simulate_mercari_search
+from internal.llm.llm_parameter_extraction import \
+    extract_search_parameters_with_llm_ollama
 from internal.utils.constants import N
 
 if __name__ == "__main__":

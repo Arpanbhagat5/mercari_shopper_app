@@ -1,12 +1,12 @@
-import re
 import json
+import re
+
 import requests
+
 from internal.llm.prompts import PARAM_EXTRACTION_PROMPT, RECOMMENDATION_PROMPT
 from internal.parameter_matching.parameter_matcher import parameter_matcher
-from internal.utils.constants import (
-    english_to_japanese_categories,
-    item_condition_id_to_name,
-)
+from internal.utils.constants import (english_to_japanese_categories,
+                                      item_condition_id_to_name)
 
 
 def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=None):
