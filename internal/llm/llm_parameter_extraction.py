@@ -3,7 +3,8 @@ import re
 
 import requests
 
-from internal.llm.prompts import PARAM_EXTRACTION_PROMPT, RECOMMENDATION_PROMPT
+from internal.prompts.recommendation_prompt import RECOMMENDATION_PROMPT
+from internal.prompts.parameter_extraction_prompt import PARAM_EXTRACTION_PROMPT
 from internal.parameter_matching.parameter_matcher import parameter_matcher
 from internal.utils.constants import (
     ENG_TO_JPN_CATEGORY_MAP,

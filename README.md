@@ -20,13 +20,59 @@ The project consists of the following Python files:
 ```
 mercari_shopper_app/
 ├── mercari_shopper_app.py      # Main script (CLI)
-├── mercapi_api_client.py      # Mercari API interaction (mercapi-api.py)
-├── llm_parameter_extraction.py # LLM parameter extraction & recommendations
-├── parameter_matcher.py       # Category ID matching
-├── prompts.py                 # LLM prompts
-├── categories.json            # Mercari category data
-├── requirements.txt           # Dependencies
-└── README.md                  # Documentation
+OK, let's update the README.md file to reflect the current project structure and the "clean code" refactoring we've done.  Here's a revised version of the README content based on your latest directory tree and the points you've listed. I've incorporated the directory structure change (cmd to cli), updated the "Project Structure" section, and made a few other minor wording adjustments for clarity.
+
+Please replace the content of your README.md file with the following:
+Markdown
+
+# Mercari Japan Shopper (Python)
+
+## Description
+
+Command-line application for searching Mercari Japan using natural language queries.
+
+**Key Features:**
+
+*   **Natural Language Search:** Accepts search queries in natural language (English and Japanese).
+*   **Parameter Extraction:** Extracts search parameters (keywords, price range, categories, brands, etc.) from natural language queries using a local LLM (Ollama/Llama3.2).
+*   **Mercari Japan API Interaction:**  Interacts with the real Mercari Japan API (via the [`mercapi API`](https://github.com/take-kun/mercapi) library) to perform searches.
+*   **Item Recommendations:** Generates item recommendations based on Mercari search results using an LLM.
+*   **Bilingual Queries:** Supports both English and Japanese search queries.
+
+**Limitations (Important):** Real Mercari API interaction is **experimental and potentially unreliable.**  "No Items Found" or limited results are common due to API behavior and limitations. See the "Limitations" section for details.
+
+## Project Structure
+
+The project is organized into the following directory structure and Python modules:
+
+mercari_shopper_app/
+├── cli/
+│   └── mercari_shopper_app.py           # Main script - Command-line interface
+├── internal/
+│   ├── api_client/
+│   │   └── mercari_api_client.py        # Mercari API interaction logic
+│   ├── llm/
+│   │   ├── llm_parameter_extraction.py  # LLM-based parameter extraction
+│   │   └── llm_recommendation.py        # LLM-based recommendation generation
+│   ├── parameter_matching/
+│   │   ├── parameter_matcher.py         # Category and parameter matching logic
+│   │   └── facets_config.py             # Facet configurations (categories as of now)
+│   ├── domain/                          # (Optional - for future domain entities)
+│   └── utils/                           # (For general utility functions, if needed)
+├── facets/                              # JSON files for facet data (categories, brands, etc.)
+│   ├── categories.json                  # Only this is implemnted as of now
+│   ├── brands.json
+│   ├── colors.json
+│   ├── conditions.json
+│   ├── shippingMethods.json
+│   ├── shippingPayers.json
+│   └── sizes.json
+├── prompts/                             # Files for LLM prompts
+│   ├── parameter_extraction_prompt.py
+│   └── recommendation_prompt.py
+├── README.md                            # Project documentation (this file)
+├── requirements.txt                     # Python dependencies
+└── init.py                              # Marks mercari_shopper_app as a Python package
 ```
 
 ## Setup Instructions
@@ -41,16 +87,21 @@ mercari_shopper_app/
     git clone git@github.com:Arpanbhagat5/g-m-s.git
     ```
 
-3.  **Virtual Environment (Recommended):**
-    *   Navigate to project dir: `cd v4`
-    *   Create: `python3 -m venv venv`
-    *   Activate: `source venv/bin/activate` (macOS/Linux) or `venv\Scripts\activate` (Windows)
-
+3.  **Create and Activate Virtual Environment (Recommended):**
+    ```bash
+    cd mercari_shopper_app  # Navigate to the project root directory
+    python3 -m venv .venv     # Create a virtual environment named '.venv'
+    source .venv/bin/activate  # Activate the virtual environment (macOS/Linux)
+    # For Windows, use: .venv\Scripts\activate
+    ```
 4.  **Install Dependencies:**
     *   Activated venv: `pip install -r requirements.txt`
 
 5.  **Run Application:**
-    *   Terminal, project dir: `python mercari_shopper_app.py`
+    ```bash
+    python cli/mercari_shopper_app.py
+    ```
+    Run this command from the project root directory (`mercari_shopper_app`).
 
 ## Usage Instructions
 
