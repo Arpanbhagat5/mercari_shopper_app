@@ -181,7 +181,7 @@ Found 120 items.
 
 ## Design Choices
 
-**Local LLM (Ollama and Llama3.2):**  The application uses a local LLM via Ollama for parameter extraction and recommendation generation. This choice is driven by several key factors:
+*   **Local LLM (Ollama and Llama3.2):**  The application uses a local LLM via Ollama for parameter extraction and recommendation generation. This choice is driven by several key factors:
     *   **Cost-Effectiveness:**  Using a local LLM like Llama3.2 via Ollama eliminates the costs associated with using cloud-based LLM APIs (like OpenAI, Claude, etc.), which can become significant with frequent use. Running Ollama locally is free after the initial model download.
     *   **Privacy:**  Local LLM processing ensures user privacy as the user requests and LLM interactions are processed directly on the user's machine, without sending data to external servers.
     *   **Offline Functionality:**  Once Ollama and the model are set up, the application can function offline, without requiring a constant internet connection (except for the initial model download and software installation).
