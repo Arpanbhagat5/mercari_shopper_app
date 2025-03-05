@@ -1,10 +1,10 @@
-from internal.parameter_matching.facets_config import facets_config
+from internal.parameter_matching.facets_config import config
 from internal.utils.constants import ENG_TO_JPN_CATEGORY_MAP
 
 
 class ParameterMatcher:
-    def __init__(self, config=facets_config):
-        self.facets_config = config
+    def __init__(self, config=config):
+        self.config = config
 
     def match_category_names_to_ids(self, extracted_category_names):
         """
@@ -20,7 +20,7 @@ class ParameterMatcher:
             Returns a list of IDs for categories that *were* successfully matched (can be empty if no matches).
         """
         matched_category_ids = []
-        category_name_to_id_map = self.facets_config.category_name_to_id_map
+        category_name_to_id_map = self.config.category_name_to_id_map
 
         for extracted_name in extracted_category_names:
             japanese_name = ""

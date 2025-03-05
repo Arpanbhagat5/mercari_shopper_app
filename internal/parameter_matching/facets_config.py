@@ -1,19 +1,31 @@
 import json
 import os
+from typing import Dict, List, Optional
 
 
 class FacetsConfig:
-    categories_file_path = os.path.join(
-        os.path.dirname(__file__), "facets", "categories.json"
-    )
+    """
+    Loads and provides access to category data from a JSON file.
+    """
 
-    def __init__(self, categories_file=categories_file_path):
-        self.categories_file = categories_file
-        self.category_name_to_id_map = self._load_category_data()
+    def __init__(self, categories_file_path: str) -> None:
+        """
+        Initializes FacetsConfig with the path to the categories JSON file.
 
-    def _load_category_data(self):
-        """Loads category data from categories.json and creates a name-to-id map."""
-        category_name_to_id_map = {}
+        Args:
+            categories_file_path: Path to the categories JSON file.
+        """
+        self.categories_file: str = categories_file_path
+        self.category_name_to_id_map: Dict[str, str] = self._load_category_data()
+
+    def _load_category_data(self) -> Dict[str, str]:
+        """
+        Loads category data from the specified JSON file and creates a name-to-id map.
+
+        Returns:
+            A dictionary mapping category names to category IDs.
+        """
+        category_name_to_id_map: Dict[str, str] = {}
         try:
             with open(self.categories_file, "r", encoding="utf-8") as f:
                 categories_data = json.load(f)
@@ -40,28 +52,46 @@ class FacetsConfig:
             )
         return category_name_to_id_map
 
-    def get_valid_category_names(self):
-        """Returns a list of valid category names."""
+    def get_valid_category_names(self) -> List[str]:
+        """
+        Returns a list of valid category names loaded from the configuration.
+        """
         return list(self.category_name_to_id_map.keys())
 
-    def get_category_id_by_name(self, category_name):
-        """Returns the category ID for a given category name, or None if not found."""
+    def get_category_id_by_name(self, category_name: str) -> Optional[str]:
+        """
+        Returns the category ID for a given category name.
+
+        Args:
+            category_name: The name of the category to look up.
+
+        Returns:
+            The category ID if found, otherwise None.
+        """
         return self.category_name_to_id_map.get(category_name)
 
 
-# Initialize FacetsConfig - This will load category data when the module is imported
-facets_config = FacetsConfig()
+# Initialize FacetsConfig -  NOW with the file path argument!
+default_categories_file_path = os.path.join(
+    os.path.dirname(__file__), "..", "facets", "categories.json"  # Corrected path!
+)
+config = FacetsConfig(default_categories_file_path)
 
 if __name__ == "__main__":
     # Example usage and testing
-    config = FacetsConfig()
+    example_config = FacetsConfig(
+        default_categories_file_path
+    )  # Use the same path here too
+
     print(
-        "Valid Category Names (first 10):", list(config.get_valid_category_names())[:10]
+        "Valid Category Names (first 10):",
+        list(example_config.get_valid_category_names())[:10],
     )
     print(
-        "\nCategory ID for 'レディース':", config.get_category_id_by_name("レディース")
+        "\nCategory ID for 'レディース':",
+        example_config.get_category_id_by_name("レディース"),
     )
     print(
         "Category ID for 'NonExistentCategory':",
-        config.get_category_id_by_name("NonExistentCategory"),
+        example_config.get_category_id_by_name("NonExistentCategory"),
     )
