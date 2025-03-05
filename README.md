@@ -179,10 +179,16 @@ Found 120 items.
 
 ```
 
-
 ## Design Choices
 
-*   **Local LLM (Ollama and Llama3.2):**  The application uses a local LLM via Ollama for parameter extraction and recommendation generation. This choice prioritizes user privacy and offline functionality, as the LLM runs locally without relying on external API services. Llama3.2 is chosen as a capable and readily available model in Ollama.
+**Local LLM (Ollama and Llama3.2):**  The application uses a local LLM via Ollama for parameter extraction and recommendation generation. This choice is driven by several key factors:
+    *   **Cost-Effectiveness:**  Using a local LLM like Llama3.2 via Ollama eliminates the costs associated with using cloud-based LLM APIs (like OpenAI, Claude, etc.), which can become significant with frequent use. Running Ollama locally is free after the initial model download.
+    *   **Privacy:**  Local LLM processing ensures user privacy as the user requests and LLM interactions are processed directly on the user's machine, without sending data to external servers.
+    *   **Offline Functionality:**  Once Ollama and the model are set up, the application can function offline, without requiring a constant internet connection (except for the initial model download and software installation).
+    *   **Ease of Setup and Experimentation:** Ollama provides a relatively straightforward setup process and simplifies experimentation with different open-source LLMs locally. It offers a good balance between ease of use and control over the LLM environment.
+    *   **Suitability for Task:** For the task of parameter extraction and recommendation generation in this Mercari Shopper application, a capable local LLM like Llama3.2 is sufficient to achieve reasonable performance, making the complexity and cost of cloud-based APIs less necessary for this particular use case.
+    While cloud-based LLM APIs offer potentially more powerful models and scalability, the benefits of local processing with Ollama are well-aligned with the goals of this project.
+
 *   **JSON-based Communication with LLM:**  Strict JSON format is enforced for communication with the LLM (both in prompts and expected responses). This ensures structured and reliable data exchange, making it easier to parse and process the LLM's output in Python.
 *   **Facet-Based Parameter Matching:**  To improve the accuracy and robustness of parameter extraction, especially for categories, the application employs a facet-based matching mechanism. It loads valid category data from `categories.json` and uses the `parameter_matcher.py` module to validate and map extracted category names to category IDs. This approach is more scalable and maintainable than relying solely on prompt engineering for parameter validation.
 *   **Simulated Mercari Search:**  For this version, a simulated Mercari search is implemented using a pre-defined dataset. This allows for development and testing without requiring access to the real Mercari API and avoids potential rate limits or API key management.  The `mercari-api.py` library is included as a potential dependency for future real API integration.
@@ -198,11 +204,12 @@ Found 120 items.
 *   **Advanced Price Range Understanding:**  While price range extraction is implemented, further improve the LLM's ability to understand and handle more complex and nuanced price-related queries (e.g., "cheapest gaming laptop", "mid-range camera").
 *   **Error Handling and Robustness:**  Enhance error handling throughout the application to gracefully manage API errors, LLM failures, and unexpected user input. Add more input validation and logging.
 *   **Support for More Languages:** Extend the bilingual capability to support more languages beyond English and Japanese.
+*   **Interactive prompt:**  If a user provides a vague request like "cheap phone," the system could ask clarifying questions: "What brand are you interested in?", "What's your price range?".
 
 ## Limitations
-
+*   **Dependency on user prompts:** If user's prompt are vague expect vague results and sometimes no result. but this behavior is consistent with the actual UI search as well. I also cross checked many queries on the actual Ui with matching results being generated.
 *   **Price Range Queries in Query String:**  Mercari Japan's search functionality (and this simulated search) may not fully support price range specifications (like "under 4000 jpy", "over 25000 yen") directly within the text query itself. While the application *extracts* price ranges from such queries, the actual search filtering might primarily rely on the separate `price_min` and `price_max` parameters. For best results with price filtering, use general item keywords in your query and rely on the extracted price range being applied as a filter.
 *   **Category Matching:** Category matching relies on a pre-defined `categories.json` file and English-to-Japanese category name mappings.  Imperfect matches or categories not present in the data may be ignored.
 *   **Brand, Condition, Shipping Payer Facets:**  Currently, the application extracts parameters for brands, item conditions, and shipping payer, but these facets are not yet fully implemented in the simulated Mercari search or recommendation generation. Future versions could expand on these facets.
 *   **Simulated Search:** This application uses a *simulated* Mercari search. It does not interact with the real Mercari API to fetch live, up-to-date item listings. The search results and recommendations are based on a pre-defined set of example items. To use live Mercari data, integration with the actual Mercari API would be required.
-*   **Ollama and Model Dependency:** The application depends on Ollama being installed and running locally, and the `llama3.2` model (or a compatible model) being available. Performance and accuracy may vary depending on the specific LLM model used.
+*   **Ollama and Model Dependency:** The application depends on Ollama being installed and running locally, and the `llama3.2` model (or a compatible model) being available. Performance and accuracy may vary depending on the specific LLM model used. I tried many other local runnable models but with my M2 mac, I could get reasonable responses with this model.
