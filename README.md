@@ -54,7 +54,15 @@ The project consists of the following Python files:
 ## Setup Instructions
 
 1.  **Prerequisites:**
-    *   **Ollama:** You need to have Ollama (<https://ollama.com/>) installed and running.
+    *   **Ollama:** You need to install and run Ollama on your system. Ollama is a tool that allows you to run large language models locally.
+        *   **Download Ollama:** Go to the [Ollama website](https://ollama.com/) and download the installer for your operating system (macOS, Linux, or Windows).
+        *   **Install Ollama:** Run the installer you downloaded and follow the on-screen instructions.
+        *   **Run Ollama Server:** After installation, you need to ensure the Ollama server is running in the background.
+            *   **On macOS:** Ollama should start automatically after installation. You should see the Ollama icon in your menu bar.
+            *   **On Windows:** Ollama should also start automatically. Check your system tray for the Ollama icon.
+            *   **On Linux:** You might need to start the Ollama server manually after installation. Refer to the [Ollama documentation](https://ollama.com/docs/linux) for specific instructions for your Linux distribution.  Typically, you might run `ollama serve` in a terminal, or use systemd if provided in the installation instructions.
+        *   **Verify Ollama is Running:** To check if Ollama is running, open your terminal and try to run the command `ollama list`. If Ollama is running correctly, this command should list the models you have available (you might not have any models yet, which is fine at this stage). If it's not running, you'll likely see an error message like "Error: could not connect to Ollama server".
+
     *   **Ollama Model:**  Make sure you have the `llama3.2` model (or a compatible model) available in Ollama. You can pull it by running: `ollama pull llama3.2` in your terminal.
     *   **Python:** Python 3.x must be installed on your system.
 
