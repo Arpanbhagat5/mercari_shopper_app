@@ -1,8 +1,13 @@
 import json
+import os
 
 
 class FacetsConfig:
-    def __init__(self, categories_file="facets/categories.json"):
+    categories_file_path = os.path.join(
+        os.path.dirname(__file__), "facets", "categories.json"
+    )
+
+    def __init__(self, categories_file=categories_file_path):
         self.categories_file = categories_file
         self.category_name_to_id_map = self._load_category_data()
 
