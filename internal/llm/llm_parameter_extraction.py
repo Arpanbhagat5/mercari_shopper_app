@@ -73,53 +73,12 @@ def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=N
         try:
             extracted_params_json = json.loads(json_text)
 
-            # --- Clean the Query (Price Keywords) ---
-            query = extracted_params_json.get("query", "")
-            price_min = extracted_params_json.get("price_min")
-            price_max = extracted_params_json.get("price_max")
-
-            price_keywords_regex = re.compile(
-                r"(under|below|within|up to|less than|over|above|more than|than|between|from|to|range|exactly|price of)\s*\d+?\s*(jpy|yen|円)?",
-                re.IGNORECASE,
-            )
-            cleaned_query_price = price_keywords_regex.sub("", query).strip()
-
-            # --- Clean the Query (Category Phrases) ---
-            category_names_list_en_lower = [
-                name.lower() for name in ENG_TO_JPN_CATEGORY_MAP.keys()
-            ]  # Get lowercase English category names
-            category_names_list_jp = list(
-                ENG_TO_JPN_CATEGORY_MAP.values()
-            )  # Get Japanese category names
-            all_category_names = (
-                category_names_list_en_lower + category_names_list_jp
-            )  # Combine both
-
-            category_phrases_regex = re.compile(
-                r"(in|from|for|category|of|品)\s*(?P<category_name>"
-                + "|".join(re.escape(cat) for cat in all_category_names)
-                + r")\s*(category|カテゴリー|の)?",  # Capture category name
-                re.IGNORECASE,
-            )
-            # Clean based on category phrases, using already price-cleaned query
-            cleaned_query_category = category_phrases_regex.sub(
-                "", cleaned_query_price
-            ).strip()
-
-            # --- Remove trailing comma and punctuation ---
-            cleaned_query_category = cleaned_query_category.rstrip(",").rstrip()
-
-            extracted_params_json["query"] = (
-                cleaned_query_category  # Update query with category-cleaned version
-            )
-
             # --- Category Name Matching and ID Conversion ---
             if "categories" in extracted_params_json:
                 extracted_category_names = extracted_params_json["categories"]
                 matched_category_ids = parameter_matcher.match_category_names_to_ids(
                     extracted_category_names
                 )  # Use parameter_matcher
-                # fix me add handling for when matched_category_ids is None
                 if matched_category_ids:
                     extracted_params_json["categories"] = (
                         matched_category_ids  # Replace category names with IDs

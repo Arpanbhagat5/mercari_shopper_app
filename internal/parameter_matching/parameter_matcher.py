@@ -3,37 +3,21 @@ from internal.utils.constants import ENG_TO_JPN_CATEGORY_MAP
 
 
 class ParameterMatcher:
-    """
-    Matches extracted parameter names (like category names) to their corresponding IDs
-    using configuration data (e.g., from FacetsConfig) and translation maps.
-    """
-
     def __init__(self, config=config):
-        """
-        Initializes ParameterMatcher with a FacetsConfig instance.
-
-        Args:
-            config: A FacetsConfig instance providing access to facet data (e.g., categories).
-                    Defaults to the globally initialized 'config' from facets_config.py.
-        """
         self.config = config
 
     def match_category_names_to_ids(self, extracted_category_names):
         """
-        Matches extracted category names (English or Japanese) to Mercari category IDs.
-
+        Matches extracted category names (English or Japanese) to Mercari category IDs using facets_config.
         Attempts to translate English category names to Japanese before matching.
-        Returns IDs for successfully matched categories, ignoring unmatched ones (relaxed matching).
-
-        Warning: Category name matching is case-sensitive against Japanese category names
-        from the configuration. English to Japanese translation is case-insensitive for lookup.
+        Returns IDs for successfully matched categories, ignores unmatched ones. (Relaxed Matching)
 
         Args:
             extracted_category_names: A list of category names (strings) extracted by the LLM.
 
         Returns:
-            A list of Mercari category IDs (strings) corresponding to the valid matched category names.
-            Returns an empty list if no categories are successfully matched.
+            A list of Mercari category IDs (integers) corresponding to the valid matched category names.
+            Returns a list of IDs for categories that *were* successfully matched (can be empty if no matches).
         """
         matched_category_ids = []
         category_name_to_id_map = self.config.category_name_to_id_map
@@ -53,9 +37,9 @@ class ParameterMatcher:
                 matched_category_ids.append(category_name_to_id_map[japanese_name])
             else:
                 print(
-                    f"Warning: Extracted category name '{extracted_name}' (Japanese: '{japanese_name if japanese_name else 'N/A' }') does not perfectly match valid Mercari categories and will be ignored."
+                    f"Warning: Extracted category name '{extracted_name}' (or its English version) does not perfectly match valid Mercari categories and will be ignored."
                 )
-                # Ignore and continue to the next category, instead of returning empty list
+                # Now, just ignore and continue to the next category, instead of returning empty list
 
         return matched_category_ids  # Return IDs of successfully matched categories, even if some were not matched
 

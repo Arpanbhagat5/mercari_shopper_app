@@ -1,66 +1,52 @@
-import json
+from internal.parameter_matching.facets_config import (
+    config,
+)  # Import the config instance
 
 
-def get_category_ids_from_names(category_names):
+def map_category_names_to_ids(category_names, facets_config=config):
     """
-    Maps a list of category names to a list of Mercari category IDs using categories.json.
+    Maps a list of category names to a list of Mercari category IDs using FacetsConfig.
+
+    For each category name provided, it attempts to find a matching ID from the
+    category data loaded by FacetsConfig.  Category names not found in the
+    configuration are ignored, and a warning is printed for each unfound name.
 
     Args:
         category_names: A list of category names (strings).
+        facets_config: An instance of FacetsConfig (defaults to the global 'config').
 
     Returns:
-        A list of category IDs (integers) corresponding to the given names.
-        Returns an empty list if any category name is not found.
+        A list of category IDs (strings) corresponding to the successfully
+        matched category names.  Category names that could not be matched are skipped.
+        Returns an empty list if no category names in the input list are matched.
     """
     category_ids = []
-    category_name_to_id_map = {}  # Create a map for faster lookup
-
-    try:
-        with open("facets/categories.json", "r", encoding="utf-8") as f:
-            categories_data = json.load(f)
-            if categories_data and "data" in categories_data:
-                # Process categories and build the map
-                def process_category_list(category_list):
-                    for category_item in category_list:
-                        category_name_to_id_map[category_item["name"]] = category_item[
-                            "id"
-                        ]
-                        if "child" in category_item:
-                            process_category_list(
-                                category_item["child"]
-                            )  # Recursive call for children
-
-                process_category_list(
-                    categories_data["data"]
-                )  # Start processing from the root
-
-            else:
-                print(
-                    "Warning: 'categories.json' does not have expected 'data' structure in tool_utils."
-                )
-                return []  # Return empty list if data is not in expected format
-
-    except FileNotFoundError:
-        print(
-            "Error: 'categories.json' file not found in tool_utils. Make sure it's in the same directory as the script."
-        )
-        return []  # Return empty list if file not found
-    except json.JSONDecodeError:
-        print(
-            "Error: Could not decode 'categories.json' in tool_utils.  File might be corrupted."
-        )
-        return []  # Return empty list if JSON is invalid
+    category_name_to_id_map = facets_config.category_name_to_id_map
 
     for name in category_names:
-        if name in category_name_to_id_map:
-            category_ids.append(category_name_to_id_map[name])
+        category_id = category_name_to_id_map.get(name)  # Use .get() for safe lookup
+        if category_id:
+            category_ids.append(category_id)
         else:
             print(
-                f"Warning: Category name '{name}' not found in 'categories.json' in tool_utils."
+                f"Warning: Category name '{name}' not found in configured categories and will be ignored."
             )
-            return (
-                []
-            )  # If any category is not found, return empty list (for now, to be strict)
-            # You could modify this to return IDs for found categories and skip unfound ones if needed.
+            # Now, just ignore and continue to the next category
 
-    return category_ids
+    return category_ids  # Return IDs of successfully matched categories
+
+
+if __name__ == "__main__":
+    # Example usage and testing
+    test_category_names = [
+        "レディース",
+        "メンズ",
+        "家電・スマホ・カメラ",
+        "ファッション",
+        "NonExistentCategory",
+    ]
+
+    matched_ids = map_category_names_to_ids(test_category_names)
+
+    print("Category Names:", test_category_names)
+    print("Matched Category IDs (relaxed matching):", matched_ids)
