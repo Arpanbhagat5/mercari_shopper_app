@@ -15,7 +15,10 @@ item_condition_id_to_name = {
 
 
 english_to_japanese_categories = {
-    "fashion": "ファッション",
+    # NOTE: This is a partial mapping for demonstration purposes.
+    # The actual mapping should include all relevant categories.
+    # Not all the categories listed here are mapped as used by mercari actually
+    "fashion": "ファッション/小物",
     "electronics": "家電",
     "gadgets": "ガジェット",
     "home & living": "家具・インテリア",

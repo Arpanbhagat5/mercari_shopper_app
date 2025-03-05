@@ -82,20 +82,15 @@ def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=N
                         "Warning: No valid category IDs found for extracted category names."
                     )
 
-            return json.dumps(
-                extracted_params_json
-            )  # Return JSON string with category IDs
+            return json.dumps(extracted_params_json)
 
         except json.JSONDecodeError as json_err:
-            print(
-                f"Error: Could not decode JSON from LLM output in llm_parameter_extraction:\n{json_text}"
-            )
-            print(f"JSONDecodeError details: {json_err}")
+            print(f"Error: JSON Decode Error in llm_parameter_extraction: {json_err}")
             return None
 
     except requests.exceptions.RequestException as req_err:
-        print(f"Request error occurred in llm_parameter_extraction: {req_err}")
+        print(f"Request error in llm_parameter_extraction: {req_err}")
         return None
     except Exception as e:
-        print(f"An unexpected error occurred in llm_parameter_extraction: {e}")
+        print(f"Unexpected error in llm_parameter_extraction: {e}")
         return None
