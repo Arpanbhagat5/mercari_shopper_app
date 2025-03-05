@@ -1,10 +1,14 @@
 import asyncio
 from mercapi import Mercapi
+import json
 
 
 def simulate_mercari_search(search_params):
-    """Simulates a Mercari search and returns raw search results.
-    Now handles category IDs directly.
+    """Simulates a Mercari search using mercapi library and returns raw search results.
+    Args:
+        search_params: A dictionary containing search parameters.
+    Returns:
+        A list of Mercari items as search results.
     """
 
     mercari_params = {}

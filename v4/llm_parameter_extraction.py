@@ -19,12 +19,8 @@ def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=N
     """
 
     if mercari_items:
-        # Format search results for prompt - PART 2 now included
         top_mercari_items = mercari_items
         search_results_formatted = "\n\n**Mercari Search Results (Top Items for recommendation generation):**\n"
-        from tool_utils import (
-            item_condition_id_to_name,
-        )  # Import here to avoid circular dependency
 
         for item in top_mercari_items:
             condition_name = item_condition_id_to_name.get(

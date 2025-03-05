@@ -19,6 +19,7 @@ Extract the following search parameters from the user request. If a parameter is
 *   **Price Range Extraction**:
     *   Identify and extract **price_min** and **price_max** values if the user specifies a price range or limit.
     *   Understand phrases like:
+        *   "in xyz category", "for abc brand", "with xyz condition", "by seller/buyer" (These are not to be considered as query text)
         *   "under X JPY", "less than X yen", "below X yen", "up to X yen", "within X yen"  (These imply **price_max = X**, **price_min = null or 0**)
         *   "over X JPY", "more than X yen", "above X yen", "X yen and up" (These imply **price_min = X**, **price_max = null**)
         *   "between X and Y yen", "from X to Y jpy", "X-Y yen range" (These imply **price_min = X**, **price_max = Y**)
