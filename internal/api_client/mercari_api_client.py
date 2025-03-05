@@ -1,6 +1,5 @@
 import asyncio
 from mercapi import Mercapi
-import json
 
 
 def simulate_mercari_search(search_params):

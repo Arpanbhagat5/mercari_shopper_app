@@ -1,5 +1,5 @@
-from facets_config import facets_config
-from tool_utils import english_to_japanese_categories
+from internal.parameter_matching.facets_config import facets_config
+from internal.utils.constants import english_to_japanese_categories
 
 
 class ParameterMatcher:

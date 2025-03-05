@@ -1,8 +1,13 @@
 import json
+import sys
+import os
 
-from llm_parameter_extraction import extract_search_parameters_with_llm_ollama
-from mercari_api_client import simulate_mercari_search
-from tool_utils import N
+
+from internal.llm.llm_parameter_extraction import (
+    extract_search_parameters_with_llm_ollama,
+)
+from internal.api_client.mercari_api_client import simulate_mercari_search
+from internal.utils.constants import N
 
 if __name__ == "__main__":
     print("Welcome to Mercari Shopper!")
