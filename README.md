@@ -56,8 +56,8 @@ mercari_shopper_app/
 2.  Enter search request when prompted (or `exit`). Examples:
     *   `cheap manga`
     *   `vintage watch under 5000 yen`
-    *   `格安のレディースワンピース`
-    *   `baby swimsuit, in baby category`
+    *   `nintendo switch new`
+    *   `kids swimsuit, in baby category`
 3.  Application output: Extracted parameters, Mercari search results (if any), LLM recommendations.
 4.  Repeat or type `exit`.
 
