@@ -17,9 +17,6 @@ def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=N
         A dictionary containing the extracted search parameters and top 3 item recommendations (if available).
         Returns None if an error occurs during the process.
     """
-    formatted_prompt_part1 = PARAM_EXTRACTION_PROMPT.format(  # Use imported prompt
-        user_request=user_request_text
-    )
 
     if mercari_items:
         # Format search results for prompt - PART 2 now included
@@ -34,12 +31,14 @@ def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=N
                 item.item_condition_id, "Condition Unknown"
             )
             search_results_formatted += f"- Item Name: {item.name}, Price: ¥{item.price}, Condition: {condition_name}, Item ID: {item.id_}\n"
-        formatted_prompt = RECOMMENDATION_PROMPT.format(  # Use imported prompt
+        formatted_prompt = RECOMMENDATION_PROMPT.format(
             search_results_placeholder=search_results_formatted,
         )
         print(search_results_formatted)
     else:
-        formatted_prompt = formatted_prompt_part1
+        formatted_prompt = PARAM_EXTRACTION_PROMPT.format(
+            user_request=user_request_text
+        )
 
     ollama_api_url = "http://localhost:11434/api/generate"
 
@@ -76,9 +75,16 @@ def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=N
                 matched_category_ids = parameter_matcher.match_category_names_to_ids(
                     extracted_category_names
                 )  # Use parameter_matcher
-                extracted_params_json["categories"] = (
-                    matched_category_ids  # Replace category names with IDs
-                )
+                # fix me add handling for when matched_category_ids is None
+                if matched_category_ids:
+                    extracted_params_json["categories"] = (
+                        matched_category_ids  # Replace category names with IDs
+                    )
+                else:
+                    extracted_params_json["categories"] = None
+                    print(
+                        "Warning: No valid category IDs found for extracted category names."
+                    )
 
             return json.dumps(
                 extracted_params_json

@@ -12,8 +12,8 @@ def simulate_mercari_search(search_params):
     mercari_params["price_min"] = search_params.get("price_min")
     mercari_params["price_max"] = search_params.get("price_max")
 
-    category_ids = search_params.get("categories", [])  # Directly get category IDs
-    mercari_params["categories"] = category_ids  # Use category IDs directly
+    category_ids = search_params.get("categories", [])
+    mercari_params["categories"] = category_ids
 
     mercari_params["brands"] = search_params.get("brands", [])
     mercari_params["item_conditions"] = search_params.get("item_conditions", [])
@@ -27,12 +27,13 @@ def simulate_mercari_search(search_params):
                 price_min=mercari_params["price_min"],
                 price_max=mercari_params["price_max"],
                 categories=mercari_params["categories"],
+                # TODO Handle with same logic as categories
                 # brands=mercari_params["brands"], # Facet params commented out for now
                 # item_conditions=mercari_params["item_conditions"],
                 # shipping_payer=mercari_params["shipping_payer"],
             )
         )
-        return results  # Return raw search results
+        return results
 
     except Exception as e:
         print(f"\n--- Error during mercapi search in mercari_api_client: {e} ---")

@@ -1,9 +1,5 @@
 import json
 
-# from mercapi import Mercapi  # No longer directly used here
-# from mercapi.requests.search import SearchRequestData # No longer directly used here
-
-# Import functions from modules
 from llm_parameter_extraction import extract_search_parameters_with_llm_ollama
 from mercari_api_client import simulate_mercari_search
 from tool_utils import N

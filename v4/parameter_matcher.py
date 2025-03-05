@@ -23,12 +23,15 @@ class ParameterMatcher:
         category_name_to_id_map = self.facets_config.category_name_to_id_map
 
         for extracted_name in extracted_category_names:
-            japanese_name = extracted_name  # Assume Japanese by default
-            lower_english_name = extracted_name.lower()
-            if lower_english_name in english_to_japanese_categories:
+            japanese_name = ""
+            category_name = (
+                extracted_name  # Default to extracted name if no match found
+            )
+            lower_category_name = category_name.lower()
+            if lower_category_name in english_to_japanese_categories:
                 japanese_name = english_to_japanese_categories[
-                    lower_english_name
-                ]  # Translate
+                    lower_category_name
+                ]  # Translate English to Japanese
 
             if japanese_name in category_name_to_id_map:
                 matched_category_ids.append(category_name_to_id_map[japanese_name])
