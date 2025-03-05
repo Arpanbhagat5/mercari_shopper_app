@@ -140,6 +140,7 @@ Found 120 items.
     *   Cost-effective, private, offline capable.
     *   Sufficient for parameter extraction & recommendations.
     *   Ollama simplifies setup & experimentation.
+    *   (minus) Not as capable as paid ones like Claude or OpenAI models
 
 *   **`mercapi-api.py` Library:**
     *   **Real Mercari API Interaction:** Designed for real API, simplifies integration.
