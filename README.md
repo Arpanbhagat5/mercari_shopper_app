@@ -8,7 +8,7 @@ Command-line application for searching Mercari Japan using natural language.
 
 *   Natural Language Search (English/Japanese)
 *   Parameter Extraction via Local LLM (Ollama/Llama3.2)
-*   **Real Mercari Japan API Interaction** (via `mercapi-api.py`)
+*   Real Mercari Japan API Interaction (via [`mercapi API`](https://github.com/take-kun/mercapi))
 *   Item Recommendations (LLM-generated)
 *   Bilingual (English/Japanese queries)
 
@@ -153,7 +153,7 @@ Found 120 items.
 
 *   **Real Mercari API - Unreliable Interaction:** **Expect issues.**
     *   **"No Items Found"/Limited Results:** Frequent, even for valid queries. API behavior, inventory limitations.
-    *   **API Instability/Errors:** External API prone to downtime, changes, rate limits. `mercapi-api.py` library stability not guaranteed.
+    *   **API Instability/Errors:** External API prone to downtime, changes, rate limits. `mercapi API` library stability not guaranteed.
     *   **Potential Auth Requirements:** API may need authentication not fully implemented.
 
     **Recommendation:** API interaction is fragile. "No Items Found" may be normal API response. Try broader queries.
