@@ -108,6 +108,7 @@ mercari_shopper_app/
 1.  Run `mercari_shopper_app.py`.
 2.  Enter search request when prompted (or `exit`). Examples:
     *   `cheap manga`
+    *   `one piece manga, in 500 jpy to 800 jpy`
     *   `vintage watch under 5000 yen`
     *   `nintendo switch new`
     *   `kids swimsuit`
