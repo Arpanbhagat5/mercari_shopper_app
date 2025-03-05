@@ -181,3 +181,6 @@ other_versions/
 
 # .git directory
 .git/
+
+# __pycache__ directory
+__pycache__/
