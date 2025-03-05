@@ -3,9 +3,10 @@ import os
 import sys
 
 from internal.api_client.mercari_api_client import simulate_mercari_search
-from internal.llm.llm_parameter_extraction import \
-    extract_search_parameters_with_llm_ollama
-from internal.utils.constants import N
+from internal.llm.llm_parameter_extraction import (
+    extract_search_parameters_with_llm_ollama,
+)
+from internal.utils.constants import ITEM_COUNT_FOR_RECOMMENDATION
 
 if __name__ == "__main__":
     print("Welcome to Mercari Shopper!")
@@ -37,11 +38,12 @@ if __name__ == "__main__":
                     # Pass only top items for recommendation
                     print("Generating item recommendations...")
                     items_for_recommendation = (
-                        mercari_search_result.items[:N]  # Limit to top N
+                        mercari_search_result.items[:ITEM_COUNT_FOR_RECOMMENDATION]
                         # mercari_search_result.items # Use all items
                         if mercari_search_result.items
-                        and len(mercari_search_result.items) > N
-                        else []  # Use all items if less than N
+                        and len(mercari_search_result.items)
+                        > ITEM_COUNT_FOR_RECOMMENDATION
+                        else []  # Use all items if less than ITEM_COUNT_FOR_RECOMMENDATION
                     )
                     recommendation_params_json = (
                         extract_search_parameters_with_llm_ollama(

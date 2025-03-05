@@ -1,5 +1,5 @@
 from internal.parameter_matching.facets_config import facets_config
-from internal.utils.constants import english_to_japanese_categories
+from internal.utils.constants import ENG_TO_JPN_CATEGORY_MAP
 
 
 class ParameterMatcher:
@@ -28,8 +28,8 @@ class ParameterMatcher:
                 extracted_name  # Default to extracted name if no match found
             )
             lower_category_name = category_name.lower()
-            if lower_category_name in english_to_japanese_categories:
-                japanese_name = english_to_japanese_categories[
+            if lower_category_name in ENG_TO_JPN_CATEGORY_MAP:
+                japanese_name = ENG_TO_JPN_CATEGORY_MAP[
                     lower_category_name
                 ]  # Translate English to Japanese
 

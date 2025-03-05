@@ -5,8 +5,10 @@ import requests
 
 from internal.llm.prompts import PARAM_EXTRACTION_PROMPT, RECOMMENDATION_PROMPT
 from internal.parameter_matching.parameter_matcher import parameter_matcher
-from internal.utils.constants import (english_to_japanese_categories,
-                                      item_condition_id_to_name)
+from internal.utils.constants import (
+    ENG_TO_JPN_CATEGORY_MAP,
+    ITEM_CONDITION_ID_TO_NAME_MAP,
+)
 
 
 def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=None):
@@ -28,7 +30,7 @@ def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=N
         search_results_formatted = "\n\n**Mercari Search Results (Top Items for recommendation generation):**\n"
 
         for item in top_mercari_items:
-            condition_name = item_condition_id_to_name.get(
+            condition_name = ITEM_CONDITION_ID_TO_NAME_MAP.get(
                 item.item_condition_id, "Condition Unknown"
             )
             search_results_formatted += f"- Item Name: {item.name}, Price: ¥{item.price}, Condition: {condition_name}, Item ID: {item.id_}\n"
@@ -83,10 +85,10 @@ def extract_search_parameters_with_llm_ollama(user_request_text, mercari_items=N
 
             # --- Clean the Query (Category Phrases) ---
             category_names_list_en_lower = [
-                name.lower() for name in english_to_japanese_categories.keys()
+                name.lower() for name in ENG_TO_JPN_CATEGORY_MAP.keys()
             ]  # Get lowercase English category names
             category_names_list_jp = list(
-                english_to_japanese_categories.values()
+                ENG_TO_JPN_CATEGORY_MAP.values()
             )  # Get Japanese category names
             all_category_names = (
                 category_names_list_en_lower + category_names_list_jp

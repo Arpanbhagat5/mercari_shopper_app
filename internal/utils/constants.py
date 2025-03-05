@@ -1,8 +1,8 @@
 # item count for recommendations
-N = 20
+ITEM_COUNT_FOR_RECOMMENDATION = 20
 
 # --- Item Condition ID to Name Mapping ---
-item_condition_id_to_name = {
+ITEM_CONDITION_ID_TO_NAME_MAP = {
     1: "New, unused",  # "新品、未使用"
     2: "Like new",  # "未使用に近い"
     3: "Used - Excellent",  # "目立った傷や汚れなし"
@@ -12,7 +12,7 @@ item_condition_id_to_name = {
 }
 
 
-english_to_japanese_categories = {
+ENG_TO_JPN_CATEGORY_MAP = {
     # NOTE: This is a partial mapping for demonstration purposes.
     # The actual mapping should include all relevant categories.
     # Not all the categories listed here are mapped as used by mercari actually
