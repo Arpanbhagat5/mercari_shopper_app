@@ -35,12 +35,14 @@ mercari_shopper_app/
     *   **Ollama:** [ollama.com](https://ollama.com/) - Install & run server. Verify: `ollama list` in terminal.
     *   **Ollama Model:** `llama3.2` - Pull model: `ollama pull llama3.2` in terminal.
     *   **Python:** Python 3.x installed.
-    *   **`categories.json`:** Ensure file is in project directory.
 
 2.  **Clone/Download Project:** Get all Python files, `categories.json`, `requirements.txt`.
+    ```
+    git clone git@github.com:Arpanbhagat5/g-m-s.git
+    ```
 
 3.  **Virtual Environment (Recommended):**
-    *   Navigate to project dir: `cd mercari_shopper_app`
+    *   Navigate to project dir: `cd v4`
     *   Create: `python3 -m venv venv`
     *   Activate: `source venv/bin/activate` (macOS/Linux) or `venv\Scripts\activate` (Windows)
 
@@ -57,7 +59,7 @@ mercari_shopper_app/
     *   `cheap manga`
     *   `vintage watch under 5000 yen`
     *   `nintendo switch new`
-    *   `kids swimsuit, in baby category`
+    *   `kids swimsuit`
 3.  Application output: Extracted parameters, Mercari search results (if any), LLM recommendations.
 4.  Repeat or type `exit`.
 
@@ -70,7 +72,6 @@ Enter your Mercari Japan search request (or type 'exit' to quit):
 Nintendo switch 本体のみ
 
 --- User Request: "Nintendo switch 本体のみ" ---
-Warning: Extracted category name '' (or its English version) does not perfectly match valid Mercari categories and will be ignored.
 {
   "query": "Nintendo switch \u672c\u4f53\u306e\u307f",
   "price_min": null,
@@ -146,7 +147,7 @@ Found 120 items.
     *   Promotes maintainability, aims for UI result consistency.
 
 *   **JSON for LLM Communication:** Structured, reliable data exchange.
-*   **Facet-Based Parameter Matching:** Robust category handling via `categories.json`.
+*   **Facet-Based Parameter Matching:** Robust facet handling. Eg. `categories.json`.
 *   **Bilingual:** English/Japanese queries supported.
 
 ## Limitations
@@ -156,11 +157,10 @@ Found 120 items.
     *   **API Instability/Errors:** External API prone to downtime, changes, rate limits. `mercapi API` library stability not guaranteed.
     *   **Potential Auth Requirements:** API may need authentication not fully implemented.
 
-    **Recommendation:** API interaction is fragile. "No Items Found" may be normal API response. Try broader queries.
-
+*   **Recommendation:** API interaction is fragile. "No Items Found" may be normal API response. Try broader queries.
 *   **Dependency on User Prompts:** Vague prompts may yield vague/no results (like Mercari UI).
 *   **Price Range Queries in Query String:**  May not be fully supported by Mercari API. Use general keywords + price parameters.
-*   **Category Matching:** Imperfect matching, limited `categories.json`.
+*   **Category Matching:** Imperfect matching, limited/outdated `categories.json`.
 *   **Brand/Condition/Shipping Facets:** Extracted but not fully used in API or recommendations.
 
 ## Potential Improvements
@@ -169,14 +169,11 @@ Found 120 items.
     *   Robust error handling, logging, retries.
     *   Investigate API authentication needs.
     *   Verify parameter mapping, API compatibility.
-    *   Rate limit handling.
-    *   Explore full `mercapi-api.py` features for better results.
+    *   Explore full `mercapi API` features for better results.
 
 *   **Expand Facet Handling:** Implement Brand/Condition/Shipping facets in API calls & recommendations.
 *   **Fuzzy Category Matching:** Handle category name variations.
 *   **Enhanced Recommendations:** Consider item popularity, ratings (if API provides), visual similarity, advanced NLP.
 *   **User Interface:** Web UI or desktop GUI.
 *   **Advanced Price Understanding:** Handle complex price queries ("cheapest", "mid-range").
-*   **Error Handling & Robustness:** Improve error management, input validation, logging.
-*   **More Languages:** Support more than English/Japanese.
 *   **Interactive Prompts:** Clarifying questions for vague user requests.
