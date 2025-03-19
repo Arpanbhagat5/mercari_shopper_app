@@ -1,30 +1,3 @@
-# Mercari Japan Shopper
-
-## Description
-
-Command-line application for searching Mercari Japan using natural language.
-
-**Key Features:**
-
-*   Natural Language Search (English/Japanese)
-*   Parameter Extraction via Local LLM (Ollama/Llama3.2)
-*   Real Mercari Japan API Interaction (via [`mercapi API`](https://github.com/take-kun/mercapi))
-*   Item Recommendations (LLM-generated)
-*   Bilingual (English/Japanese queries)
-
-**Limitations (Important):**  **Real API interaction is experimental and potentially unreliable. Expect "No Items Found" or limited results.** See "Limitations" section for details.
-
-## Project Structure
-
-The project consists of the following Python files:
-```
-mercari_shopper_app/
-├── mercari_shopper_app.py      # Main script (CLI)
-OK, let's update the README.md file to reflect the current project structure and the "clean code" refactoring we've done.  Here's a revised version of the README content based on your latest directory tree and the points you've listed. I've incorporated the directory structure change (cmd to cli), updated the "Project Structure" section, and made a few other minor wording adjustments for clarity.
-
-Please replace the content of your README.md file with the following:
-Markdown
-
 # Mercari Japan Shopper (Python)
 
 ## Description
