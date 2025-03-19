@@ -17,7 +17,7 @@ Command-line application for searching Mercari Japan using natural language quer
 ## Project Structure
 
 The project is organized into the following directory structure and Python modules:
-
+```
 mercari_shopper_app/
 ├── cli/
 │   └── mercari_shopper_app.py           # Main script - Command-line interface
